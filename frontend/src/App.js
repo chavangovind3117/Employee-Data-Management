@@ -1,23 +1,46 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import EmployeeList from './components/EmployeeList';
+import EmployeeForm from './components/EmployeeForm';
+import Modal from './components/Modal';
+import { useEmployees } from './context/EmployeeContext';
 import './App.css';
 
 function App() {
+  const { addEmployee, updateEmployee } = useEmployees();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingEmployee, setEditingEmployee] = useState(null);
+
+  const handleEdit = (employee) => {
+    setEditingEmployee(employee);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setEditingEmployee(null);
+  };
+
+  const handleUpdate = async (formData) => {
+    await updateEmployee(editingEmployee.id, formData);
+    handleCloseModal();
+  };
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h1>Employee Management</h1>
       </header>
+      <main>
+        <EmployeeForm onSubmit={addEmployee} />
+        <EmployeeList onEdit={handleEdit} />
+        <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
+          <EmployeeForm 
+            onSubmit={handleUpdate} 
+            initialData={editingEmployee} 
+          />
+        </Modal>
+      </main>
     </div>
   );
 }
