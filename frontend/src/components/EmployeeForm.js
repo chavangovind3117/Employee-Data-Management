@@ -1,10 +1,8 @@
-// frontend/src/components/EmployeeForm.js
 import React, { useState, useEffect } from 'react';
 
 const EmployeeForm = ({ onSubmit, initialData = null }) => {
   const [formData, setFormData] = useState({ name: '', email: '', position: '' });
 
-  // Determine if we are in "edit" mode
   const isEditMode = Boolean(initialData);
 
   // Pre-fill the form if we are in edit mode

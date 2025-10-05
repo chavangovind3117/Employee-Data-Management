@@ -1,9 +1,6 @@
-// frontend/src/components/EmployeeList.js
 import React from 'react';
-// We no longer need to import Link
 import { useEmployees } from '../context/EmployeeContext';
 
-// It accepts the onEdit prop from App.js
 const EmployeeList = ({ onEdit }) => { 
   const { employees, deleteEmployee } = useEmployees();
 
@@ -30,7 +27,6 @@ const EmployeeList = ({ onEdit }) => {
               <td>{employee.email}</td>
               <td>{employee.position}</td>
               <td>
-                {/* This is now a simple button again */}
                 <button className="edit" onClick={() => onEdit(employee)}>
                   Edit
                 </button>
